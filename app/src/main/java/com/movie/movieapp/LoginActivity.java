@@ -3,6 +3,7 @@ package com.movie.movieapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.arch.persistence.room.Room;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.movie.movieapp.src.dao.UserDao;
+import com.movie.movieapp.src.database.AppDatabase;
+import com.movie.movieapp.src.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +71,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "database-name")
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                .build();
+
+        UserDao userDao = db.userDao();
+        User u1 = new User(1, "das", "dsa", "fds");
+        userDao.deleteAll();
+        userDao.insertAll(u1);
+        List<User> users = userDao.getAll();
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
