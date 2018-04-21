@@ -1,8 +1,11 @@
 package com.movie.movieapp;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private MovieDao movieDao;
 
     private List<Movie> movies;
+    private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
         this.movies = movieDao.getAll();
 
         this.initializeListView(createStringList(this.movies));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                final int index = this.listView.getSelectedItemPosition();
+
+                final Intent myIntent = new Intent(MainActivity.this, ShowDetailsActivity.class);
+                ShowDetailsActivity.movie = movies.get(position);
+                startActivity(myIntent);
+            }
+        });
+
     }
 
     private List<String> createStringList(final List<Movie> movies) {
@@ -51,10 +66,8 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usersName_type_rating);
 
         setContentView(R.layout.activity_main);
-        ListView lv = findViewById(R.id.listView);
-        lv.setAdapter(adapter);
+        this.lv = findViewById(R.id.listView);
+        this.lv.setAdapter(adapter);
     }
 
-
-//    public MainActivity() {}
 }
