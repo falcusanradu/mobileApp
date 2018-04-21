@@ -25,4 +25,8 @@ public interface MovieDao {
 
     @Delete
     void delete(Movie movie);
+
+
+    @Query("DELETE  FROM movie WHERE idMovie like '%'")
+    void deleteAll();
 }
