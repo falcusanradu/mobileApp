@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.movie.movieapp.src.dao.MovieDao;
 import com.movie.movieapp.src.database.AppDatabase;
@@ -15,6 +16,7 @@ import com.movie.movieapp.src.mockdata.DataHelper;
 import com.movie.movieapp.src.model.Movie;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,10 +38,39 @@ public class MainActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
         movieDao = db.movieDao();
-        DataHelper.insertMovies(db);
+        //DataHelper.insertMovies(db);
         this.movies = movieDao.getAll();
 
-        this.initializeListView(createStringList(this.movies));
+        setContentView(R.layout.activity_main);
+
+        String search = getIntent().getStringExtra("searchKey");
+        List<String> genres = Arrays.asList("action","Action","horror","Horror",
+                "Drama","drama","Adventure","adventure",
+                "Thriller","thriller","Comedy","comedy");
+
+
+        final List<Movie> movieList = new ArrayList<>();
+        if (search.equals("all")){
+            for(Movie m: movies){
+                movieList.add(m);
+            }
+        } else if (!search.equals("other")) {
+            for (Movie m : movies) {
+                if (m.getName().contains(search) || m.getGenre().equals(search)) {
+                    movieList.add(m);
+                }
+            }
+        } else {
+            for (Movie m: movies){
+                if (!genres.contains(m.getGenre())){
+                    movieList.add(m);
+                }
+            }
+        }
+
+        movies = movieList;
+
+        this.initializeListView(createStringList(movieList));
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -51,12 +82,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        //set title
+
+        setTitle("Movie list results for: " + search);
+
     }
 
     private List<String> createStringList(final List<Movie> movies) {
         List<String> stringMovies = new ArrayList<>();
         for (Movie movie : movies) {
-            stringMovies.add(movie.getName() + " " + movie.getGenre() + " " + movie.getStatus());
+            stringMovies.add("Title: " + movie.getName() + " Genre: " + movie.getGenre()
+                    + "   rating: " + movie.getNote() + "/10" + " \nstatus: " + movie.getStatus());
         }
         return stringMovies;
     }
@@ -65,9 +102,19 @@ public class MainActivity extends AppCompatActivity {
     private void initializeListView(final List<String> usersName_type_rating) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, usersName_type_rating);
 
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         this.lv = findViewById(R.id.listView);
         this.lv.setAdapter(adapter);
+    }
+
+    protected void onRestart() {
+        super.onRestart();
+
+        this.movies = movieDao.getAll();
+        this.initializeListView(createStringList(this.movies));
+
+        Toast.makeText(MainActivity.this, "Movie list Loaded", Toast.LENGTH_LONG).show();
+
     }
 
 }
