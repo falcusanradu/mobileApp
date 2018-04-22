@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.movie.movieapp.src.dao.UserDao;
 import com.movie.movieapp.src.database.AppDatabase;
 import com.movie.movieapp.src.mockdata.DataHelper;
+import com.movie.movieapp.src.mockdata.Global;
 import com.movie.movieapp.src.model.User;
 
 import java.util.List;
@@ -49,8 +50,11 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         final UserDao userDao = db.userDao();
-        DataHelper.insertUsers(db);
-        this.users = userDao.getAll();
+
+        if (Global.users.isEmpty()) {
+            DataHelper.insertUsers(db);
+        }
+        Global.users = userDao.getAll();
         // Set up the login form.
         this.username = (AutoCompleteTextView) findViewById(R.id.username);
         this.password = (EditText) findViewById(R.id.password);
@@ -79,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             // error
             this.alertDialog("Email and password must not be empty!");
         } else {
-            for (User u : this.users) {
+            for (User u : Global.users) {
                 if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                     userPassMatches = true;
                 }

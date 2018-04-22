@@ -12,7 +12,6 @@ import java.util.List;
 
 public class DataHelper {
 
-
     public static void insertMovies(AppDatabase db) {
         final MovieDao movieDao = db.movieDao();
         Movie m1 = new Movie(1, "movie1", "a", "horror", 8, "status");
