@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class LoginActivity extends AppCompatActivity {
 
-    Button mEmailSignInButton;
+    private Button mEmailSignInButton;
 
     // UI references.
     private AutoCompleteTextView username;
