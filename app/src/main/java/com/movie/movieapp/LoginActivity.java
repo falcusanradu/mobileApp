@@ -51,10 +51,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final UserDao userDao = db.userDao();
 
-        if (Global.users.isEmpty()) {
-            DataHelper.insertUsers(db);
-        }
-        Global.users = userDao.getAll();
+        users = userDao.getAll();
         // Set up the login form.
         this.username = (AutoCompleteTextView) findViewById(R.id.username);
         this.password = (EditText) findViewById(R.id.password);
@@ -83,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             // error
             this.alertDialog("Email and password must not be empty!");
         } else {
-            for (User u : Global.users) {
+            for (User u : users) {
                 if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
                     userPassMatches = true;
                 }

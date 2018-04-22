@@ -40,7 +40,8 @@
         android:hint="Password"
         android:inputType="text"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:password="true"/>
 
     <AutoCompleteTextView
         android:id="@+id/confirm_password"
@@ -52,5 +53,6 @@
         android:hint="Confirm password"
         android:inputType="text"
         android:maxLines="1"
-        android:singleLine="true" />
+        android:singleLine="true"
+        android:password="true"/>
 </RelativeLayout>

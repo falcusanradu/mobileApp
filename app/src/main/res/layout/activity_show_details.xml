@@ -20,7 +20,8 @@
         android:inputType="text|textPersonName"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="50dp"
-        android:hint="Description"/>
+        android:hint="Description"
+        android:editable = "false"/>
 
     <TextView
         android:layout_width="match_parent"

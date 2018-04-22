@@ -63,6 +63,9 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.btnOtherGenres:
                 intent.putExtra("searchKey", "other");
                 break;
+            case R.id.btnThriller:
+                intent.putExtra("searchKey", "thriller");
+                break;
         }
 
         startActivity(intent);

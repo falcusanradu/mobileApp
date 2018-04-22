@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
         movieDao = db.movieDao();
-        DataHelper.insertMovies(db);
+
         this.movies = movieDao.getAll();
 
         setContentView(R.layout.activity_main);
@@ -111,7 +111,47 @@ public class MainActivity extends AppCompatActivity {
         super.onRestart();
 
         this.movies = movieDao.getAll();
-        this.initializeListView(createStringList(this.movies));
+
+        setContentView(R.layout.activity_main);
+
+        String search = getIntent().getStringExtra("searchKey");
+        List<String> genres = Arrays.asList("action","Action","horror","Horror",
+                "Drama","drama","Adventure","adventure",
+                "Thriller","thriller","Comedy","comedy");
+
+
+        final List<Movie> movieList = new ArrayList<>();
+        if (search.equals("all")){
+            for(Movie m: movies){
+                movieList.add(m);
+            }
+        } else if (!search.equals("other")) {
+            for (Movie m : movies) {
+                if (m.getName().contains(search) || m.getGenre().equals(search)) {
+                    movieList.add(m);
+                }
+            }
+        } else {
+            for (Movie m: movies){
+                if (!genres.contains(m.getGenre())){
+                    movieList.add(m);
+                }
+            }
+        }
+
+        movies = movieList;
+
+        this.initializeListView(createStringList(movieList));
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                final int index = this.listView.getSelectedItemPosition();
+
+                final Intent myIntent = new Intent(MainActivity.this, ShowDetailsActivity.class);
+                ShowDetailsActivity.movie = movies.get(position);
+                startActivity(myIntent);
+            }
+        });
 
         Toast.makeText(MainActivity.this, "Movie list Loaded", Toast.LENGTH_LONG).show();
 

@@ -41,9 +41,9 @@ public class RegisterActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
 
-        RegisterActivity.userDao = db.userDao();
-        DataHelper.insertUsers(db);
-        RegisterActivity.users = userDao.getAll();
+        userDao = db.userDao();
+        //DataHelper.insertUsers(db);
+        users = userDao.getAll();
         //set up elements
         this.username = (AutoCompleteTextView) findViewById(R.id.username_register);
         this.password = (AutoCompleteTextView) findViewById(R.id.password_register);
@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
             this.alertDialog("password and confirmation do not match");
         } else {
             User user = new User(this.giveTheGreatestId(), username, password, "normal user");
-            RegisterActivity.userDao.insertAll(user);
+            userDao.insertAll(user);
             Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(myIntent);
         }
