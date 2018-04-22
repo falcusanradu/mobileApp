@@ -12,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.movie.movieapp.src.dao.UserDao;
 import com.movie.movieapp.src.database.AppDatabase;
@@ -25,11 +27,12 @@ import java.util.List;
  */
 public class LoginActivity extends AppCompatActivity {
 
+    // from UI
     private Button mEmailSignInButton;
-
-    // UI references.
     private AutoCompleteTextView username;
     private EditText password;
+    private TextView registerTextView;
+    private ProgressBar progressBar;
 
     private List<User> users;
 
@@ -49,12 +52,13 @@ public class LoginActivity extends AppCompatActivity {
         DataHelper.insertUsers(db);
         this.users = userDao.getAll();
         // Set up the login form.
-        username = (AutoCompleteTextView) findViewById(R.id.username);
-
-        password = (EditText) findViewById(R.id.password);
-        mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        this.username = (AutoCompleteTextView) findViewById(R.id.username);
+        this.password = (EditText) findViewById(R.id.password);
+        this.mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        this.registerTextView = (TextView) findViewById(R.id.registerTextView);
+        this.progressBar = (ProgressBar) findViewById(R.id.login_progress);
         this.clickSignIn();
-
+        this.goToRegister();
     }
 
 
@@ -85,8 +89,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         if (userPassMatches) {
+            this.progressBar.setVisibility(View.VISIBLE);
             Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(myIntent);
+            this.progressBar.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -101,6 +107,16 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuidler.create();
         alertDialog.setTitle("Error!");
         alertDialog.show();
+    }
+
+    private void goToRegister() {
+        this.registerTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
 
