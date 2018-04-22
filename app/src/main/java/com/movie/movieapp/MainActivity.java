@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .fallbackToDestructiveMigration()
                 .build();
         movieDao = db.movieDao();
-        //DataHelper.insertMovies(db);
+        DataHelper.insertMovies(db);
         this.movies = movieDao.getAll();
 
         setContentView(R.layout.activity_main);

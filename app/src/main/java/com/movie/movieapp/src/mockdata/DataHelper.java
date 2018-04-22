@@ -3,8 +3,10 @@ package com.movie.movieapp.src.mockdata;
 import android.arch.persistence.room.Room;
 
 import com.movie.movieapp.src.dao.MovieDao;
+import com.movie.movieapp.src.dao.UserDao;
 import com.movie.movieapp.src.database.AppDatabase;
 import com.movie.movieapp.src.model.Movie;
+import com.movie.movieapp.src.model.User;
 
 import java.util.List;
 
@@ -42,6 +44,16 @@ public class DataHelper {
         movieDao.insertAll(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16,
                 m17, m18, m19, m20, m21, m22, m23, m24);
 
+    }
+
+
+    public static void insertUsers(AppDatabase db) {
+        final UserDao userDao = db.userDao();
+        User u1 = new User(1, "username", "password", "admin");
+        User u2 = new User(2, "1", "1", "1");
+
+        userDao.deleteAll();
+        userDao.insertAll(u1, u2);
     }
 
 
