@@ -2,6 +2,7 @@ package com.movie.movieapp;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         movieDao = db.movieDao();
 
+        //DataHelper.insertMovies(db);
         this.movies = movieDao.getAll();
 
         setContentView(R.layout.activity_main);
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 "Thriller","thriller","Comedy","comedy");
 
 
+
         final List<Movie> movieList = new ArrayList<>();
         if (search.equals("all")){
             for(Movie m: movies){
@@ -56,13 +59,14 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (!search.equals("other")) {
             for (Movie m : movies) {
-                if (m.getName().contains(search) || m.getGenre().equals(search)) {
+                if (m.getName().toLowerCase().contains(search.toLowerCase())
+                        || m.getGenre().toLowerCase().equals(search.toLowerCase())) {
                     movieList.add(m);
                 }
             }
         } else {
             for (Movie m: movies){
-                if (!genres.contains(m.getGenre())){
+                if (!genres.contains(m.getGenre().toLowerCase())){
                     movieList.add(m);
                 }
             }
@@ -92,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
     private List<String> createStringList(final List<Movie> movies) {
         List<String> stringMovies = new ArrayList<>();
         for (Movie movie : movies) {
-            stringMovies.add("Title: " + movie.getName() + " Genre: " + movie.getGenre()
-                    + "   rating: " + movie.getNote() + "/10" + " \nstatus: " + movie.getStatus());
+            stringMovies.add("Title: " + movie.getName() + " \nGenre: " + movie.getGenre()
+                    + "\t\t\t\t\t\t\t\t\t\tRating: " + movie.getNote() + "/10" + " \nStatus: " + movie.getStatus());
         }
         return stringMovies;
     }
@@ -127,13 +131,14 @@ public class MainActivity extends AppCompatActivity {
             }
         } else if (!search.equals("other")) {
             for (Movie m : movies) {
-                if (m.getName().contains(search) || m.getGenre().equals(search)) {
+                if (m.getName().toLowerCase().contains(search.toLowerCase())
+                        || m.getGenre().toLowerCase().equals(search.toLowerCase())) {
                     movieList.add(m);
                 }
             }
         } else {
             for (Movie m: movies){
-                if (!genres.contains(m.getGenre())){
+                if (!genres.contains(m.getGenre().toLowerCase())){
                     movieList.add(m);
                 }
             }

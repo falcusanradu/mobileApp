@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@android:color/background_dark"
     android:dividerHeight="10dp"
     android:orientation="vertical"
+    android:background="@drawable/movie2"
     tools:context="com.movie.movieapp.HomeActivity"
-    android:background = "@drawable/ic_launcher_background"
     >
 
     <LinearLayout
@@ -18,17 +17,20 @@
 
         <EditText
             android:id="@+id/searchText"
-            android:layout_width="260dp"
+            android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:hint="Search by title"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="#d9e6f2ff"
+            android:paddingLeft="10dp"/>
 
         <Button
             android:id="@+id/btnSearch"
-            android:layout_width="80dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background="#00ccff"
             android:text="Search" />
     </LinearLayout>
 
@@ -51,6 +53,7 @@
             android:layout_width="318dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="All Movies" />
 
         <Space
@@ -58,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,6 +82,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Horror" />
 
         <Space
@@ -90,6 +95,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Action" />
 
         <Space
@@ -97,10 +103,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -116,6 +124,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Comedy" />
 
         <Space
@@ -128,6 +137,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Drama" />
 
         <Space
@@ -135,10 +145,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
+
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -154,6 +166,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Thriller" />
 
         <Space
@@ -166,6 +179,7 @@
             android:layout_width="140dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Adventure" />
 
         <Space
@@ -193,6 +207,7 @@
             android:layout_width="318dp"
             android:layout_height="match_parent"
             android:onClick="search"
+            android:background=" #c6c6ec"
             android:text="Other Genres" />
 
         <Space
@@ -209,5 +224,35 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="318dp"
+            android:layout_height="match_parent"
+            android:onClick="logout"
+            android:background="#cc0000"
+            android:text="Log out" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
 
 </LinearLayout>

@@ -35,6 +35,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        setTitle("Register new user");
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name")
                 .allowMainThreadQueries()
@@ -71,7 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
             this.alertDialog("Username already exists");
         } else if (!password.equals(conformPassword)) {
             this.alertDialog("password and confirmation do not match");
-        } else {
+        } else if (this.checkByUsername(username)) {
+            this.alertDialog("username already taken!");
+        }
+        else {
             User user = new User(this.giveTheGreatestId(), username, password, "normal user");
             userDao.insertAll(user);
             Intent myIntent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -90,6 +94,15 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean checkIfUsernameAlreadyExists(String str) {
         for (User u : users) {
             if (u.getUsername().equals(str)) return true;
+        }
+        return false;
+    }
+
+    private boolean checkByUsername(String username) {
+        for (User u: users) {
+            if (u.getUsername().equals(username)){
+                return true;
+            }
         }
         return false;
     }

@@ -3,6 +3,7 @@ package com.movie.movieapp;
 import android.arch.persistence.room.Room;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,10 +16,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.movie.movieapp.src.Session.Session;
 import com.movie.movieapp.src.dao.UserDao;
 import com.movie.movieapp.src.database.AppDatabase;
 import com.movie.movieapp.src.mockdata.DataHelper;
-import com.movie.movieapp.src.mockdata.Global;
 import com.movie.movieapp.src.model.User;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        setTitle("LogIn - movieApp");
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database-name")
@@ -51,8 +53,10 @@ public class LoginActivity extends AppCompatActivity {
 
         final UserDao userDao = db.userDao();
 
+        //DataHelper.insertUsers(db);
         users = userDao.getAll();
         // Set up the login form.
+
         this.username = (AutoCompleteTextView) findViewById(R.id.username);
         this.password = (EditText) findViewById(R.id.password);
         this.mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
@@ -76,12 +80,14 @@ public class LoginActivity extends AppCompatActivity {
         String username = this.username.getText().toString();
         String password = this.password.getText().toString();
         boolean userPassMatches = false;
+        User user = null;
         if (username.isEmpty() || password.isEmpty()) {
             // error
             this.alertDialog("Email and password must not be empty!");
         } else {
             for (User u : users) {
                 if (u.getUsername().equals(username) && u.getPassword().equals(password)) {
+                    user = u;
                     userPassMatches = true;
                 }
             }
@@ -90,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         if (userPassMatches) {
+
+            Session.getINSTANCE().setUser(user);
             this.progressBar.setVisibility(View.VISIBLE);
             Intent myIntent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(myIntent);

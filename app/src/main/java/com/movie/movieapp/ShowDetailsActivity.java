@@ -8,9 +8,13 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import com.movie.movieapp.src.Session.Session;
 import com.movie.movieapp.src.dao.MovieDao;
 import com.movie.movieapp.src.database.AppDatabase;
 import com.movie.movieapp.src.model.Movie;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ShowDetailsActivity extends AppCompatActivity {
 
@@ -43,6 +47,12 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
         picker.setWrapSelectorWheel(false);
 
+        if (!Session.getINSTANCE().getUser().getType().equals("admin")) {
+            picker.setEnabled(false);
+        } else {
+            picker.setEnabled(true);
+        }
+
         picker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
@@ -58,15 +68,17 @@ public class ShowDetailsActivity extends AppCompatActivity {
 
     void changeStatus(View view) {
 
-        if (!btn.getText().toString().equals("Seen")) {
-            btn.setText("Seen");
+
+        if (!btn.getText().toString().equals("seen")) {
+            btn.setText("seen");
         } else {
-            btn.setText("Unseen");
+            btn.setText("unseen");
         }
 
         movie.setStatus(btn.getText().toString());
 
     }
+    
 
     @Override
     public void onBackPressed() {

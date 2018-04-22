@@ -75,4 +75,13 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
+    public void logout(View view) {
+        super.onBackPressed();
+    }
+
 }

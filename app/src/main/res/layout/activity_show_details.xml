@@ -10,18 +10,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Description" />
+        android:text="Description"
+        android:editable="false"/>
 
-    <EditText
+    <TextView
         android:id="@+id/plainTextName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text|textPersonName"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:singleLine="false"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="50dp"
-        android:hint="Description"
-        android:editable = "false"/>
+        android:paddingLeft="10dp"/>
 
     <TextView
         android:layout_width="match_parent"
