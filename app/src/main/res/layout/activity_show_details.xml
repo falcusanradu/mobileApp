@@ -32,7 +32,7 @@
         android:id="@+id/btnStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#6666ff"
+        android:background="#4d4dff"
         android:onClick="changeStatus" />
 
     <TextView

@@ -75,6 +75,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    // impiedica intoarcerea la LogIn
     @Override
     public void onBackPressed() {
         return;
